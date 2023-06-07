@@ -25,16 +25,17 @@ def program_info(url):
     if meta_keywords[0].get('content') != 'JANOGプログラム':
         exit
     else:
+        # keep page url
+        link = url
+
         # get Time, Presenter
         meta_description = soup.find('meta', attrs={'name': 'description'})
         description = meta_description.get('content')
         presenter, start_time, end_time = description.split('|')
-        print(presenter)
-        print(start_time)
-        print(end_time)
+
         # get Program title
         title = soup.h1.string
-        #print(title)
+
         # get content list
         content = soup.find('div', attrs={'class', 'entry-content cf'})
         #print(content.h3.find_next_siblings('p'))
