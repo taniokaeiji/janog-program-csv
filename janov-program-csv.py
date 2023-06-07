@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+import datetime, locale
+
 url = 'https://www.janog.gr.jp/meeting/janog52/program-ja-timeline/'
 
 def get_program_list(url):
@@ -57,7 +59,10 @@ def program_info(url):
 
         # get hold date
         content_date = content.find(id='toc3')
-        hold_date = content_date.find_next('p').text.split(' ')[1]
+        hold_date_text = content_date.find_next('p').text.split(' ')[1]
+        locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
+
+        hold_date = datetime.datetime.strptime(hold_date_text, '%Y年%m月%d日(%a)').strftime('%Y/%m/%d')
         print(hold_date)
 
 if __name__ == '__main__':
