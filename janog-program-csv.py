@@ -50,6 +50,7 @@ def program_info(url):
             if abstract.name == 'h3':
                 break
             if abstract.name == 'br':
+                abstract_text += '\n'
                 abstract = abstract.find_next()
 
         abstract = link + ""
