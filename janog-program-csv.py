@@ -49,6 +49,8 @@ def program_info(url):
             abstract = abstract.find_next()
             if abstract.name == 'h3':
                 break
+            if abstract.name == 'br':
+                abstract = abstract.find_next()
 
         abstract = link + ""
         abstract += "\n\n■概要\n"
@@ -71,6 +73,7 @@ def program_info(url):
 if __name__ == '__main__':
     links = get_program_list(url)
     events = []
+
     for link in links:
         event = program_info(link)
         events.append(event)
@@ -78,7 +81,7 @@ if __name__ == '__main__':
     # Write CSV
     header = ['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Location', 'Description']
     with open('janog-meeting-programs.csv', 'w', encoding='utf-8') as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator='\n')
         writer.writerow(header)
         for event in events:
             if event is None:
