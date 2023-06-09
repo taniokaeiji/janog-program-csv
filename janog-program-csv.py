@@ -49,9 +49,11 @@ def program_info(url):
             abstract = abstract.find_next()
             if abstract.name == 'h3':
                 break
-            if abstract.name == 'br':
-                abstract_text += '\n'
+            while abstract.name == 'br':
+                #abstract_text += '\n'
                 abstract = abstract.find_next()
+            
+            abstract_text += '\n'
 
         abstract = link + ""
         abstract += "\n\n■概要\n"
@@ -69,7 +71,7 @@ def program_info(url):
         locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
         hold_date = datetime.datetime.strptime(hold_date_text, '%Y年%m月%d日(%a)').strftime('%Y/%m/%d')
 
-        return [title, hold_date, start_time, hold_date, end_time, place, abstract]
+        return [title, hold_date, start_time, hold_date, end_time, place, abstract.replace('\n\n\n\n', '\n\n\n')]
 
 if __name__ == '__main__':
     links = get_program_list(url)
